@@ -8,11 +8,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import uk.co.foulkes.events.AlertManagerEvent;
 import uk.co.foulkes.utils.TestUtils;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 class CriticalEventChannelTest {
 
 

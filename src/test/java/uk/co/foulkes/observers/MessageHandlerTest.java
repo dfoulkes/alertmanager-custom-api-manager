@@ -1,16 +1,10 @@
 package uk.co.foulkes.observers;
 
-import model.Alert;
-import model.AlertManagerRequest;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import uk.co.foulkes.events.AlertManagerEvent;
 import uk.co.foulkes.events.TestableEvent;
 import uk.co.foulkes.utils.TestUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
