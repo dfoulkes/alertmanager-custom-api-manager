@@ -1,6 +1,6 @@
 <configuration>
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder class="uk.co.foulkes.logging.CustomLogstashEncoder">
+        <encoder class="uk.co.foulkes.logging.LogEncoder">
             <customFields>{"application":"CriticalIssueRestService"}</customFields>
         </encoder>
     </appender>

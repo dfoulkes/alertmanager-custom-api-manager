@@ -22,6 +22,7 @@ public class CriticalEventChannel implements Channel<AlertManagerEvent> {
     @Override
     public boolean isObservingEvent(ApplicationEvent event) {
         if (event == null) {
+            logger.error("Event in {} is null, unable to validate if observable", getName());
             return false;
         }
         return event instanceof AlertManagerEvent;
@@ -38,6 +39,8 @@ public class CriticalEventChannel implements Channel<AlertManagerEvent> {
             if (found.isPresent()) {
                 logger.info("SUCCESS !!! we've capture the critical event. High temperature detected!");
                 return;
+            } else {
+                logger.debug("No critical event detected");
             }
             this.currentState = event.getMessage();
     }
