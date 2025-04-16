@@ -30,9 +30,4 @@ class CriticalEventChannelTest {
         CriticalEventChannel channel = new CriticalEventChannel();
         assertFalse(channel.isObservingEvent(null));
     }
-
-
-
-
-
 }
