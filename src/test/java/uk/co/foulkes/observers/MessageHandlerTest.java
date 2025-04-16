@@ -1,8 +1,14 @@
 package uk.co.foulkes.observers;
 
+import model.Alert;
+import model.AlertManagerRequest;
 import org.junit.jupiter.api.Test;
 import uk.co.foulkes.events.AlertManagerEvent;
 import uk.co.foulkes.events.TestableEvent;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,9 +23,9 @@ class MessageHandlerTest {
     void testFiringCriticalEventToMessageQueue() {
         CriticalEventChannel criticalEventChannel = new CriticalEventChannel();
         MessageHandler messageHandler = new MessageHandler(criticalEventChannel);
-        AlertManagerEvent event = new AlertManagerEvent(this, "Test message");
+        AlertManagerEvent event = new AlertManagerEvent(this, dummyRequest());
         messageHandler.notifyObservers(event);
-        assertEquals("Test message", criticalEventChannel.getCurrentState());
+        assertEquals("firing", criticalEventChannel.getCurrentState());
     }
 
     @Test
@@ -44,8 +50,44 @@ class MessageHandlerTest {
     void testFiringEventToMessageQueueWithNoObservers() {
         CriticalEventChannel criticalEventChannel = new CriticalEventChannel();
         MessageHandler messageHandler = new MessageHandler(null);
-        AlertManagerEvent event = new AlertManagerEvent(this, "Test message");
+        AlertManagerEvent event = new AlertManagerEvent(this, dummyRequest());
         messageHandler.notifyObservers(event);
         assertEquals("", criticalEventChannel.getCurrentState());
+    }
+
+    AlertManagerRequest dummyRequest() {
+        return new AlertManagerRequest(
+                "Test",
+                "firing",
+                getDummyAlerts(),
+                getDummyLabels(),
+                getDummyLabels(),
+                getDummyLabels(),
+                "Test commonLabels",
+                "Test commonAnnotations",
+                "",
+                0
+        );
+    }
+
+    private Map<String, String> getDummyLabels() {
+        Map<String, String> labels = new HashMap<>();
+        labels.put("alertName", "HighTemp");
+        return labels;
+    }
+
+    private ArrayList<Alert> getDummyAlerts() {
+        ArrayList<Alert> alerts = new ArrayList<>();
+        Alert alert = new Alert(
+                "Test status",
+                getDummyLabels(),
+                getDummyLabels(),
+                "Test groupLabels",
+                "Test commonLabels",
+                "Test commonAnnotations",
+                null
+        );
+        alerts.add(alert);
+        return alerts;
     }
 }

@@ -1,10 +1,12 @@
 package uk.co.foulkes.observers;
 
 import org.springframework.context.ApplicationEvent;
+import uk.co.foulkes.events.AlertManagerEvent;
 
-public interface Channel<T> {
+public interface Channel<AlertManagerEvent> {
     boolean isObservingEvent(ApplicationEvent event);
-    void update(T message);
+    void update(AlertManagerEvent message);
     String getCurrentState();
+    String getName();
 }
 

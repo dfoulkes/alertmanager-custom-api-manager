@@ -29,7 +29,12 @@ public class CriticalEventChannel implements Channel<AlertManagerEvent> {
 
     @Override
     public void update(AlertManagerEvent event) {
-            Optional<Alert> found = event.getRequest().alerts().stream().filter(x -> x.labels().get(ALERT_NAME).contains(HIGH_TEMP)).findFirst();
+        if (event == null || event.getRequest() == null) {return;}
+
+            Optional<Alert> found = event.getRequest().alerts().stream()
+                                   .filter(x -> x.labels() !=null)
+                                   .filter(x -> x.labels().get(ALERT_NAME) != null)
+                                   .filter(x -> x.labels().get(ALERT_NAME).contains(HIGH_TEMP)).findFirst();
             if (found.isPresent()) {
                 logger.info("SUCCESS !!! we've capture the critical event. High temperature detected!");
                 return;
@@ -42,5 +47,8 @@ public class CriticalEventChannel implements Channel<AlertManagerEvent> {
         return currentState;
     }
 
-
+    @Override
+    public String getName() {
+        return "CriticalEventChannel";
+    }
 }

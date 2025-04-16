@@ -17,15 +17,17 @@ public class CustomLogstashEncoder extends LogstashEncoder {
             String jsonString = new String(encodedBytes, StandardCharsets.UTF_8);
             JsonNode root = mapper.readTree(jsonString);
 
-            // Add a custom field
-            ((ObjectNode) root).put("customField", "customValue");
+//            ((ObjectNode) root).put("customField", "customValue");
 
             // Modify an existing field (example: change the message)
             if (root.has("message")) {
-                ((ObjectNode) root).put("message", root.get("message").asText() + " - Custom Message");
+                ((ObjectNode) root).put("message", root.get("message").asText());
             }
 
-            return mapper.writeValueAsBytes(root);
+            // Add a newline character
+            String jsonWithNewline = mapper.writeValueAsString(root) + System.lineSeparator();
+            return jsonWithNewline.getBytes(StandardCharsets.UTF_8);
+
         } catch (Exception e) {
             // Handle exceptions appropriately (e.g., log the error)
             e.printStackTrace();

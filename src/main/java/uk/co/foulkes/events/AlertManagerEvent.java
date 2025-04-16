@@ -3,7 +3,7 @@ package uk.co.foulkes.events;
 import model.AlertManagerRequest;
 import org.springframework.context.ApplicationEvent;
 
-public class AlertManagerEvent extends ApplicationEvent {
+public final class AlertManagerEvent extends ApplicationEvent {
 
     private final AlertManagerRequest request;
 

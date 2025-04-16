@@ -1,4 +1,4 @@
-POST http://192.168.56.100:8080/api/critical-issues
+POST http://localhost:8080/api/critical-issues
 Content-Type: application/json
 
 {
