@@ -1,11 +1,7 @@
 package uk.co.foulkes.observers;
 
-import model.Alert;
-import model.AlertManagerRequest;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
-
 import uk.co.foulkes.events.AlertManagerEvent;
 import uk.co.foulkes.utils.TestUtils;
 class CriticalEventChannelTest {
