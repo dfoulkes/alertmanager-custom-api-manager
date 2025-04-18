@@ -33,7 +33,7 @@ jobs:
         run: ./gradlew test
 
       - name: Upload Test Results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: test-results
@@ -43,7 +43,7 @@ jobs:
         run: ./gradlew bootJar # Ensure bootJar is used
 
       - name: Archive build directory
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build-directory
           path: build/libs/
@@ -59,10 +59,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Download build directory
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build-directory
           path: build/libs/
