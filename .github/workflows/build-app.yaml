@@ -38,9 +38,9 @@ jobs:
         run: |
           if [[ "${GITHUB_REF}" == "refs/heads/main" ]]; then
             ./gradlew release -Prelease.useAutomaticVersion=true
-            VERSION=$(./gradlew -q printReleaseVersion)
+            VERSION=$(./gradlew -q printVersion)
           else
-            VERSION=$(./gradlew -q printReleaseVersion)
+            VERSION=$(./gradlew -q printVersion)
           fi
           echo "RELEASE_VERSION=$VERSION" >> $GITHUB_ENV
         env:
