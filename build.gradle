@@ -46,7 +46,6 @@ release {
     failOnPublishNeeded = true
     failOnSnapshotDependencies = false
     failOnUnversionedFiles = true
-    //failOnTagExists = true
     tagTemplate = 'v$version'
     versionPropertyFile = 'gradle.properties'
     snapshotSuffix = '-SNAPSHOT'
