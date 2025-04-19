@@ -34,7 +34,43 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-release  {
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.4.4'
+    id 'io.spring.dependency-management' version '1.1.7'
+    id "net.researchgate.release" version "3.1.0"
+}
+
+group = 'uk.co.foulkes'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(23)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'net.logstash.logback:logstash-logback-encoder:7.4'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+    jvmArgs += '-javaagent:' + configurations.testRuntimeClasspath.find { it.name.contains("byte-buddy-agent") }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+release {
     failOnCommitNeeded = true
     failOnPublishNeeded = true
     failOnSnapshotDependencies = false
@@ -43,5 +79,5 @@ release  {
     tagTemplate = 'v$version'
     preTagCommitMessage = 'Release version $version'
     preTagCommitMessage = 'Release version $version'
-    preTagCommitMessage = 'Release version $version'}
+    preTagCommitMessage = 'Release version $version'
 }
