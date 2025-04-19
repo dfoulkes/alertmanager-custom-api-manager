@@ -40,7 +40,6 @@ jobs:
             ./gradlew release -Prelease.useAutomaticVersion=true
             VERSION=$(./gradlew -q printReleaseVersion)
           else
-            ./gradlew release -Prelease.useAutomaticVersion=true -Prelease.incrementer=patch
             VERSION=$(./gradlew -q printReleaseVersion)
           fi
           echo "RELEASE_VERSION=$VERSION" >> $GITHUB_ENV
