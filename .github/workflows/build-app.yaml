@@ -30,6 +30,21 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      - name: Determine release version
+        id: determine_release_version
+        run: |
+          if [[ "${GITHUB_REF}" == "refs/heads/main" ]]; then
+            ./gradlew release -Prelease.useAutomaticVersion=true
+            VERSION=$(./gradlew -q printReleaseVersion)
+          else
+            ./gradlew nextVersion -Dincrementer=patch
+            VERSION=$(./gradlew -q printNextVersion)
+          fi
+          echo "RELEASE_VERSION=$VERSION" >> $GITHUB_ENV
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+
       - name: Build with Gradle
         run: ./gradlew build
 
@@ -92,4 +107,10 @@ jobs:
           context: .
           platforms: ${{ matrix.platforms }}
           push: true
-          tags: ghcr.io/${{ github.repository }}/critical-issue-rest-service:latest
+          tags: |
+            ghcr.io/${{ github.repository }}/critical-issue-rest-service:${{ env.RELEASE_VERSION }}
+            ghcr.io/${{ github.repository }}/critical-issue-rest-service:latest
+          env:
+            REGISTRY: ghcr.io
+            IMAGE_NAME: ${{ github.repository }}/critical-issue-rest-service
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
