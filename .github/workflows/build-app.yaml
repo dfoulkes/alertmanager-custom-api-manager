@@ -39,8 +39,6 @@ jobs:
           if [[ "${GITHUB_REF}" == "refs/heads/main" ]]; then
             ./gradlew release -Prelease.useAutomaticVersion=true
             VERSION=$(./gradlew -q printVersion)
-          else
-            VERSION=$(./gradlew -q printVersion)
           fi
           echo "RELEASE_VERSION=$VERSION" >> $GITHUB_ENV
         env:
@@ -109,7 +107,7 @@ jobs:
           platforms: ${{ matrix.platforms }}
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}/critical-issue-rest-service:${{ env.RELEASE_VERSION }}
+          #  ghcr.io/${{ github.repository }}/critical-issue-rest-service:${{ env.RELEASE_VERSION }}
             ghcr.io/${{ github.repository }}/critical-issue-rest-service:latest
         env:
           REGISTRY: ghcr.io
