@@ -107,7 +107,6 @@ jobs:
           platforms: ${{ matrix.platforms }}
           push: true
           tags: |
-          #  ghcr.io/${{ github.repository }}/critical-issue-rest-service:${{ env.RELEASE_VERSION }}
             ghcr.io/${{ github.repository }}/critical-issue-rest-service:latest
         env:
           REGISTRY: ghcr.io
