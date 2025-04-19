@@ -110,7 +110,7 @@ jobs:
           tags: |
             ghcr.io/${{ github.repository }}/critical-issue-rest-service:${{ env.RELEASE_VERSION }}
             ghcr.io/${{ github.repository }}/critical-issue-rest-service:latest
-          env:
-            REGISTRY: ghcr.io
-            IMAGE_NAME: ${{ github.repository }}/critical-issue-rest-service
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          REGISTRY: ghcr.io
+          IMAGE_NAME: ${{ github.repository }}/critical-issue-rest-service
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
