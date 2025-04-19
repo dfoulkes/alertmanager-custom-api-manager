@@ -1,0 +1,114 @@
+name: Build & Test Java App
+
+on:
+  push:
+    branches:
+      - '*'
+  pull_request:
+    branches:
+      - '*'
+
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+  GITHUB_TOKEN: ${{ secrets.CI_TOKEN }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK 23
+        uses: actions/setup-java@v4
+        with:
+          java-version: '23'
+          distribution: 'temurin'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Determine release version
+        id: determine_release_version
+        run: |
+          if [[ "${GITHUB_REF}" == "refs/heads/main" ]]; then
+            ./gradlew release -Prelease.useAutomaticVersion=true
+            VERSION=$(./gradlew -q printVersion)
+          fi
+          echo "RELEASE_VERSION=$VERSION" >> $GITHUB_ENV
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      - name: Run Tests
+        run: ./gradlew test
+
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results
+          path: build/test-results/test
+
+      - name: Build with Gradle
+        run: ./gradlew bootJar # Ensure bootJar is used
+
+      - name: Archive build directory
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-directory
+          path: build/libs/
+
+  docker:
+    needs: build
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        # Supported architectures
+        platforms: [linux/arm64, linux/amd64, linux/arm64]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download build directory
+        uses: actions/download-artifact@v4
+        with:
+          name: build-directory
+          path: build/libs/
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.CI_TOKEN }}
+
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          platforms: ${{ matrix.platforms }}
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}/critical-issue-rest-service:latest
+        env:
+          REGISTRY: ghcr.io
+          IMAGE_NAME: ${{ github.repository }}/critical-issue-rest-service
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
