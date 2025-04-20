@@ -100,7 +100,7 @@ jobs:
     strategy:
       matrix:
         # Supported architectures
-        platforms: [linux/arm64, linux/amd64, linux/arm/v8]
+        platforms: [linux/arm64, linux/amd64]
 
     steps:
       - name: Checkout code
