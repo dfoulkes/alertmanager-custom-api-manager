@@ -30,9 +30,6 @@ jobs:
           java-version: '23'
           distribution: 'temurin'
 
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-
       - name: Determine release version
         id: determine_release_version
         run: |
