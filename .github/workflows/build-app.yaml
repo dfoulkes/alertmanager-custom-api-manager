@@ -49,6 +49,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
 
+      - name: Upload Problems Report
+        if: always() # Ensure it runs even if the build fails
+        uses: actions/upload-artifact@v4
+        with:
+          name: problems-report
+          path: build/reports/problems/problems-report.html
+
       - name: Build with Gradle
         run: ./gradlew build
 
