@@ -56,7 +56,7 @@ release {
     git {
         pushToRemote.set('origin')
         pushToBranchPrefix.set('')
-        pushOptions.set(['--repo=https://x-access-token:${CI_TOKEN}@github.com/dfoulkes/alertmanager-custom-api-manager.git'])
+        pushOptions.set(['--force'])
         commitVersionFileOnly.set(false)
         signTag.set(false)
     }
