@@ -3,11 +3,10 @@ name: Build & Test Java App
 on:
   push:
     branches:
-      - '*'
+      - 'main'
   pull_request:
     branches:
       - '*'
-
 
 env:
   REGISTRY: ghcr.io
@@ -37,6 +36,7 @@ jobs:
 
           git config --global user.name "CI Bot"
           git config --global user.email "ci-bot@foulkes.cloud"
+          git remote set-url origin https://x-access-token:${{ secrets.CI_TOKEN }}@github.com/${{ github.repository }}.git
           if [[ "${GITHUB_REF}" == "refs/heads/main" ]]; then
             ./gradlew release -Prelease.useAutomaticVersion=true
             VERSION=$(./gradlew -q printVersion)
