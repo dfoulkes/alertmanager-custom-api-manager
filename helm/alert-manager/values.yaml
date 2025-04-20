@@ -5,10 +5,10 @@
 replicaCount: 1
 
 image:
-  repository: ghcr.io/dfoulkes/alertmanager-custom-api-manager
+  repository: ghcr.io/dfoulkes/alertmanager-custom-api-manager/critical-issue-rest-service
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "latest"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -42,7 +42,8 @@ securityContext: {}
 service:
   type: LoadBalancer
   port: 80
-  combinedPort: 8080
+  targetPort: 8080
+  protocol: TCP
   annotations:
     metallb.universe.tf/loadBalancerIPs: 192.168.55.15
     # service.beta.kubernetes.io/aws-load-balancer-internal: "true"
@@ -77,13 +78,14 @@ resources: {}
 
 livenessProbe:
   httpGet:
-    path: /
-    port: http
+    path: /actuator/health
+    port: 8080
 readinessProbe:
   httpGet:
     path: /actuator/health
     port: 8080
-
+  initialDelaySeconds: 30
+  periodSeconds: 10
 autoscaling:
   enabled: false
   minReplicas: 1
