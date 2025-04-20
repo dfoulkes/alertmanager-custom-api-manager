@@ -40,6 +40,11 @@ task printVersion {
     }
 }
 
+bootJar {
+    archiveBaseName.set('CriticalIssueRestService')
+    archiveVersion.set('')
+    archiveClassifier.set('')
+}
 
 release {
     failOnCommitNeeded = true
