@@ -33,7 +33,9 @@ jobs:
       - name: Determine release version
         id: determine_release_version
         run: |
-
+          echo "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git remote set-url origin git@github.com:${{ github.repository }}.git
