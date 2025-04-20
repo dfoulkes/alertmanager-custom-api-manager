@@ -49,9 +49,9 @@ release {
     tagTemplate = 'v$version'
     versionPropertyFile = 'gradle.properties'
     snapshotSuffix = '-SNAPSHOT'
-    preTagCommitMessage = 'Release version $version'
-    preTagCommitMessage = 'Release version $version'
-    preTagCommitMessage = 'Release version $version'
+    preTagCommitMessage = 'Pre Release version $version [skip ci]'
+    tagCommitMessage = 'Release version $version [skip ci]'
+    newVersionCommitMessage = 'New Release version $version [skip ci]'
 
     git {
         pushToRemote.set('origin')

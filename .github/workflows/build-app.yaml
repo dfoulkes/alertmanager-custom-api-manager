@@ -16,6 +16,7 @@ env:
 
 jobs:
   build:
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
     runs-on: ubuntu-latest
 
     steps:
@@ -33,6 +34,9 @@ jobs:
       - name: Determine release version
         id: determine_release_version
         run: |
+
+          git config --global user.name "CI Bot"
+          git config --global user.email "ci-bot@foulkes.cloud"
           if [[ "${GITHUB_REF}" == "refs/heads/main" ]]; then
             ./gradlew release -Prelease.useAutomaticVersion=true
             VERSION=$(./gradlew -q printVersion)
