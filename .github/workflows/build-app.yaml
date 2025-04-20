@@ -130,7 +130,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          platforms: ${{ matrix.platforms }}
+          platforms: linux/amd64,linux/arm64,linux/arm/v8
           push: true
           tags: |
             ghcr.io/${{ github.repository }}/critical-issue-rest-service:latest
