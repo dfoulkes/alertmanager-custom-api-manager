@@ -6,7 +6,6 @@ plugins {
 }
 
 group = 'uk.co.foulkes'
-version = '0.0.4-SNAPSHOT'
 
 java {
     toolchain {
