@@ -40,11 +40,11 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
-  type: LoadBalancer
-  port: 80
-  combinedPort: 8080
-  annotations:
-    metallb.universe.tf/loadBalancerIPs: 192.168.55.15
+  type: ClusterIP
+  port: 8771
+  targetPort: 8080
+  # annotations:
+  #  metallb.universe.tf/loadBalancerIPs: 192.168.55.15
     # service.beta.kubernetes.io/aws-load-balancer-internal: "true"
 
 ingress:
