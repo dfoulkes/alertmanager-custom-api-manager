@@ -60,14 +60,13 @@ public class CriticalEventChannel implements Channel<AlertManagerEvent> {
                                    .filter(x -> x.labels() !=null)
                                    .filter(x -> x.labels().get(ALERT_NAME) != null)
                                    .filter(x -> isAlertNameInSet(x.labels().get(ALERT_NAME)))
-                    .findFirst();
+                                    .findFirst();
             if (found.isPresent()) {
                 logger.info("SUCCESS !!! we've capture the critical event. High temperature detected!");
-                return;
+                this.currentState = event.getMessage();
             } else {
                 logger.debug("No critical event detected");
             }
-            this.currentState = event.getMessage();
     }
 
     @Override
