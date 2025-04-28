@@ -6,7 +6,6 @@ plugins {
 }
 
 group = 'uk.co.foulkes'
-version = '0.0.2-SNAPSHOT'
 
 java {
     toolchain {
@@ -40,6 +39,11 @@ task printVersion {
     }
 }
 
+bootJar {
+    archiveBaseName.set('CriticalIssueRestService')
+    archiveVersion.set('')
+    archiveClassifier.set('')
+}
 
 release {
     failOnCommitNeeded = true
@@ -49,13 +53,14 @@ release {
     tagTemplate = 'v$version'
     versionPropertyFile = 'gradle.properties'
     snapshotSuffix = '-SNAPSHOT'
-    preTagCommitMessage = 'Release version $version'
-    preTagCommitMessage = 'Release version $version'
-    preTagCommitMessage = 'Release version $version'
+    preTagCommitMessage = 'Pre Release version $version [skip ci]'
+    tagCommitMessage = 'Release version $version [skip ci]'
+    newVersionCommitMessage = 'New Release version $version [skip ci]'
 
     git {
         pushToRemote.set('origin')
         pushToBranchPrefix.set('')
+        pushOptions.set(['--force'])
         commitVersionFileOnly.set(false)
         signTag.set(false)
     }
