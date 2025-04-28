@@ -36,8 +36,6 @@ jobs:
       - name: Determine release version
         id: determine_release_version
         run: |
-          git add gradlew
-          git commit -m "Chmod gradlew"
           if [[ "${GITHUB_REF}" == "refs/heads/main" ]]; then
             ./gradlew release -Prelease.useAutomaticVersion=true
             VERSION=$(./gradlew -q printVersion)
