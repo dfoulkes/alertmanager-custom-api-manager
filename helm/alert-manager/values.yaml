@@ -40,13 +40,14 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
+
   type: LoadBalancer
   port: 80
   targetPort: 8080
   protocol: TCP
   annotations:
     metallb.universe.tf/loadBalancerIPs: 192.168.55.15
-    # service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+  # service.beta.kubernetes.io/aws-load-balancer-internal: "true"
 
 ingress:
   enabled: false
@@ -80,12 +81,15 @@ livenessProbe:
   httpGet:
     path: /actuator/health
     port: 8080
+
 readinessProbe:
   httpGet:
     path: /actuator/health
     port: 8080
   initialDelaySeconds: 30
   periodSeconds: 10
+  timeoutSeconds: 5
+
 autoscaling:
   enabled: false
   minReplicas: 1

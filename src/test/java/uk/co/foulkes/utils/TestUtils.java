@@ -26,7 +26,8 @@ public class TestUtils {
 
     private Map<String, String> getDummyLabels() {
         Map<String, String> labels = new HashMap<>();
-        labels.put("alertName", "HighTemp");
+        labels.put("alertname", "HighTemperature");
+        labels.put("severity", "critical");
         return labels;
     }
 
