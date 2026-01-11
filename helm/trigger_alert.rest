@@ -1,0 +1,41 @@
+POST http://192.168.55.15/api/critical-issues
+Content-Type: application/json
+
+{
+  "receiver": "webhook_receiver",
+  "status": "firing",
+  "alerts": [
+    {
+      "status": "firing",
+      "labels": {
+        "alertname": "HighTemperature",
+        "instance": "node-exporter:9100",
+        "job": "node_exporter",
+        "severity": "critical"
+      },
+      "annotations": {
+        "description": "Fire critical alert, this is a test",
+        "summary": "Testing Critical Alert"
+      },
+      "startsAt": "2025-04-16T17:04:47.644Z",
+      "endsAt": "0001-01-01T00:00:00Z",
+      "generatorURL": "http://f45ea670fc94:9090/graph?g0.expr=node_load1+%3E+0.001\u0026g0.tab=1",
+      "fingerprint": "4ef1f607a8d821ff"
+    }
+  ],
+  "groupLabels": {},
+  "commonLabels": {
+    "alertname": "TestingCriticalAlert",
+    "instance": "node-exporter:9100",
+    "job": "node_exporter",
+    "severity": "critical"
+  },
+  "commonAnnotations": {
+    "description": "Fire critical alert, this is a test",
+    "summary": "Testing Critical Alert"
+  },
+  "externalURL": "http://59e08547c894:9093",
+  "version": "4",
+  "groupKey": "{}:{}",
+  "truncatedAlerts": 0
+}

@@ -100,7 +100,7 @@ jobs:
     strategy:
       matrix:
         # Supported architectures
-        platforms: [linux/arm64, linux/amd64, linux/arm64]
+        platforms: [linux/arm64, linux/amd64]
 
     steps:
       - name: Checkout code
@@ -130,7 +130,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          platforms: ${{ matrix.platforms }}
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: |
             ghcr.io/${{ github.repository }}/critical-issue-rest-service:latest
